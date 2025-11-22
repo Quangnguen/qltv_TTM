@@ -37,6 +37,8 @@ public class MainFrame extends javax.swing.JFrame {
         mainPanel.add(new thongtincanhan(), "personal");
         mainPanel.add(new muontra(), "borrow");
         mainPanel.add(new bansach(), "buy");
+        mainPanel.add(new vpp(), "office");
+        mainPanel.add(new phihv(), "membership");
         mainPanel.add(new naptien(), "topup");
         mainPanel.add(new lichsu(), "history");
         mainPanel.add(new quanlithe(), "card");
@@ -89,6 +91,8 @@ public class MainFrame extends javax.swing.JFrame {
         btnPersonal = new javax.swing.JButton();
         btnBorrow = new javax.swing.JButton();
         btnBuy = new javax.swing.JButton();
+        btnOffice = new javax.swing.JButton();
+        btnMembership = new javax.swing.JButton();
         btnTopUp = new javax.swing.JButton();
         btnHistory = new javax.swing.JButton();
         separator = new javax.swing.JSeparator();
@@ -186,11 +190,11 @@ public class MainFrame extends javax.swing.JFrame {
             new java.awt.Color(0, 120, 215)
         ));
 
-        // Button Buy
+        // Button Buy Books
         btnBuy.setBackground(new java.awt.Color(60, 60, 65));
         btnBuy.setFont(new java.awt.Font("Segoe UI", 1, 13));
         btnBuy.setForeground(new java.awt.Color(255, 255, 255));
-        btnBuy.setText("Mua sắm");
+        btnBuy.setText("Mua sách");
         btnBuy.setBorderPainted(false);
         btnBuy.setFocusPainted(false);
         btnBuy.setAlignmentX(javax.swing.JComponent.CENTER_ALIGNMENT);
@@ -199,6 +203,40 @@ public class MainFrame extends javax.swing.JFrame {
         btnBuy.addActionListener(this::btnBuyActionPerformed);
         btnBuy.addMouseListener(createButtonHoverAdapter(
             btnBuy, 
+            new java.awt.Color(60, 60, 65), 
+            new java.awt.Color(0, 120, 215)
+        ));
+
+        // Button Buy Office Supplies
+        btnOffice.setBackground(new java.awt.Color(60, 60, 65));
+        btnOffice.setFont(new java.awt.Font("Segoe UI", 1, 13));
+        btnOffice.setForeground(new java.awt.Color(255, 255, 255));
+        btnOffice.setText("Mua VPP");
+        btnOffice.setBorderPainted(false);
+        btnOffice.setFocusPainted(false);
+        btnOffice.setAlignmentX(javax.swing.JComponent.CENTER_ALIGNMENT);
+        btnOffice.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, 45));
+        btnOffice.setPreferredSize(new java.awt.Dimension(Integer.MAX_VALUE, 45));
+        btnOffice.addActionListener(this::btnOfficeActionPerformed);
+        btnOffice.addMouseListener(createButtonHoverAdapter(
+            btnOffice, 
+            new java.awt.Color(60, 60, 65), 
+            new java.awt.Color(0, 120, 215)
+        ));
+
+        // Button Membership Fee
+        btnMembership.setBackground(new java.awt.Color(60, 60, 65));
+        btnMembership.setFont(new java.awt.Font("Segoe UI", 1, 13));
+        btnMembership.setForeground(new java.awt.Color(255, 255, 255));
+        btnMembership.setText("Phí hội viên");
+        btnMembership.setBorderPainted(false);
+        btnMembership.setFocusPainted(false);
+        btnMembership.setAlignmentX(javax.swing.JComponent.CENTER_ALIGNMENT);
+        btnMembership.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, 45));
+        btnMembership.setPreferredSize(new java.awt.Dimension(Integer.MAX_VALUE, 45));
+        btnMembership.addActionListener(this::btnMembershipActionPerformed);
+        btnMembership.addMouseListener(createButtonHoverAdapter(
+            btnMembership, 
             new java.awt.Color(60, 60, 65), 
             new java.awt.Color(0, 120, 215)
         ));
@@ -268,6 +306,10 @@ public class MainFrame extends javax.swing.JFrame {
         buttonsBox.add(javax.swing.Box.createVerticalStrut(8));
         buttonsBox.add(btnBuy);
         buttonsBox.add(javax.swing.Box.createVerticalStrut(8));
+        buttonsBox.add(btnOffice);
+        buttonsBox.add(javax.swing.Box.createVerticalStrut(8));
+        buttonsBox.add(btnMembership);
+        buttonsBox.add(javax.swing.Box.createVerticalStrut(8));
         buttonsBox.add(btnTopUp);
         buttonsBox.add(javax.swing.Box.createVerticalStrut(8));
         buttonsBox.add(btnHistory);
@@ -312,6 +354,14 @@ public class MainFrame extends javax.swing.JFrame {
     private void btnHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoryActionPerformed
         showScreen("history");
     }//GEN-LAST:event_btnHistoryActionPerformed
+
+    private void btnOfficeActionPerformed(java.awt.event.ActionEvent evt) {
+        showScreen("office");
+    }
+
+    private void btnMembershipActionPerformed(java.awt.event.ActionEvent evt) {
+        showScreen("membership");
+    }
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         int option = javax.swing.JOptionPane.showConfirmDialog(
@@ -358,6 +408,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnHistory;
     private javax.swing.JButton btnHome;
+    private javax.swing.JButton btnMembership;
+    private javax.swing.JButton btnOffice;
     private javax.swing.JButton btnPersonal;
     private javax.swing.JButton btnTopUp;
     private javax.swing.JLabel headerLabel;

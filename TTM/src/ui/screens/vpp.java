@@ -8,12 +8,12 @@ package ui.screens;
  *
  * @author admin
  */
-public class bansach extends javax.swing.JPanel {
+public class vpp extends javax.swing.JPanel {
 
     /**
-     * Creates new form BuyBookPanel
+     * Creates new form OfficeSuppliesPanel
      */
-    public bansach() {
+    public vpp() {
         initComponents();
     }
 
@@ -29,30 +29,32 @@ public class bansach extends javax.swing.JPanel {
         // Main container
         mainContainer = new javax.swing.JPanel();
         
-        // Left panel - Danh sách sách
-        leftPanel = new javax.swing.JPanel();
+        // Left panel - Danh sách văn phòng phẩm
+        productsPanel = new javax.swing.JPanel();
+        categoryLabel = new javax.swing.JLabel();
+        categoryCombo = new javax.swing.JComboBox<>();
         searchLabel = new javax.swing.JLabel();
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
-        booksTable = new javax.swing.JScrollPane();
-        booksTableScroll = new javax.swing.JTable();
+        productsTable = new javax.swing.JScrollPane();
+        productsTableScroll = new javax.swing.JTable();
         
-        // Right panel - Thông tin chi tiết và giỏ hàng
-        rightPanel = new javax.swing.JPanel();
+        // Right panel - Chi tiết và giỏ hàng
+        detailsPanel = new javax.swing.JPanel();
         
-        // Book details panel
-        bookDetailsPanel = new javax.swing.JPanel();
-        bookDetailsTitle = new javax.swing.JLabel();
-        bookIdLabel = new javax.swing.JLabel();
-        bookIdField = new javax.swing.JTextField();
-        bookNameLabel = new javax.swing.JLabel();
-        bookNameField = new javax.swing.JTextField();
-        authorLabel = new javax.swing.JLabel();
-        authorField = new javax.swing.JTextField();
-        publisherLabel = new javax.swing.JLabel();
-        publisherField = new javax.swing.JTextField();
+        // Product details
+        productDetailsPanel = new javax.swing.JPanel();
+        productDetailsTitle = new javax.swing.JLabel();
+        productIdLabel = new javax.swing.JLabel();
+        productIdField = new javax.swing.JTextField();
+        productNameLabel = new javax.swing.JLabel();
+        productNameField = new javax.swing.JTextField();
+        productTypeLabel = new javax.swing.JLabel();
+        productTypeField = new javax.swing.JTextField();
         priceLabel = new javax.swing.JLabel();
         priceField = new javax.swing.JTextField();
+        stockLabel = new javax.swing.JLabel();
+        stockField = new javax.swing.JTextField();
         quantityLabel = new javax.swing.JLabel();
         quantitySpinner = new javax.swing.JSpinner();
         addToCartButton = new javax.swing.JButton();
@@ -73,7 +75,7 @@ public class bansach extends javax.swing.JPanel {
         // Title
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 28));
         titleLabel.setForeground(new java.awt.Color(45, 45, 48));
-        titleLabel.setText("Mua sách");
+        titleLabel.setText("Mua đồ dùng văn phòng phẩm");
         titleLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 40, 10, 40));
         add(titleLabel, java.awt.BorderLayout.NORTH);
 
@@ -81,98 +83,122 @@ public class bansach extends javax.swing.JPanel {
         mainContainer.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 40, 30, 40));
         mainContainer.setBackground(new java.awt.Color(245, 245, 250));
 
-        // ============ LEFT PANEL - DANH SÁCH SÁCH ============
-        leftPanel.setBackground(new java.awt.Color(255, 255, 255));
-        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách sách bán",
+        // ============ LEFT PANEL - DANH SÁCH VPP ============
+        productsPanel.setBackground(new java.awt.Color(255, 255, 255));
+        productsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách văn phòng phẩm",
             javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
             javax.swing.border.TitledBorder.DEFAULT_POSITION,
             new java.awt.Font("Segoe UI", 1, 16), new java.awt.Color(60, 60, 60)));
-        leftPanel.setLayout(new java.awt.BorderLayout(0, 10));
-        leftPanel.setPreferredSize(new java.awt.Dimension(600, 0));
-        leftPanel.setMinimumSize(new java.awt.Dimension(500, 0));
-        leftPanel.setMaximumSize(new java.awt.Dimension(700, Integer.MAX_VALUE));
+        productsPanel.setLayout(new java.awt.BorderLayout(0, 10));
+        productsPanel.setPreferredSize(new java.awt.Dimension(600, 0));
+        productsPanel.setMinimumSize(new java.awt.Dimension(500, 0));
+        productsPanel.setMaximumSize(new java.awt.Dimension(700, Integer.MAX_VALUE));
 
-        // Search panel
-        javax.swing.JPanel searchPanel = new javax.swing.JPanel();
-        searchPanel.setLayout(new java.awt.BorderLayout(10, 0));
-        searchPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        searchPanel.setBackground(new java.awt.Color(255, 255, 255));
+        // Filter panel
+        javax.swing.JPanel filterPanel = new javax.swing.JPanel();
+        filterPanel.setLayout(new java.awt.BorderLayout(10, 10));
+        filterPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        filterPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        searchLabel.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        categoryLabel.setFont(new java.awt.Font("Segoe UI", 1, 13));
+        categoryLabel.setText("Danh mục:");
+        categoryCombo.setFont(new java.awt.Font("Segoe UI", 0, 13));
+        categoryCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Tất cả", "Bút viết", "Giấy", "Tập vở", "Bìa kẹp", "Dụng cụ văn phòng"}));
+        categoryCombo.addActionListener(e -> filterByCategory());
+
+        searchLabel.setFont(new java.awt.Font("Segoe UI", 1, 13));
         searchLabel.setText("Tìm kiếm:");
         searchField.setFont(new java.awt.Font("Segoe UI", 0, 13));
-        searchField.setColumns(20);
+        searchField.setColumns(15);
         searchButton.setBackground(new java.awt.Color(0, 120, 215));
         searchButton.setForeground(new java.awt.Color(255, 255, 255));
         searchButton.setText("🔍 Tìm");
         searchButton.setFocusPainted(false);
-        searchButton.addActionListener(e -> searchBooks());
+        searchButton.addActionListener(e -> searchProducts());
 
+        javax.swing.JPanel categoryPanel = new javax.swing.JPanel(new java.awt.BorderLayout(10, 0));
+        categoryPanel.setBackground(new java.awt.Color(255, 255, 255));
+        categoryPanel.add(categoryLabel, java.awt.BorderLayout.WEST);
+        categoryPanel.add(categoryCombo, java.awt.BorderLayout.CENTER);
+
+        javax.swing.JPanel searchPanel = new javax.swing.JPanel(new java.awt.BorderLayout(10, 0));
+        searchPanel.setBackground(new java.awt.Color(255, 255, 255));
         searchPanel.add(searchLabel, java.awt.BorderLayout.WEST);
         searchPanel.add(searchField, java.awt.BorderLayout.CENTER);
         searchPanel.add(searchButton, java.awt.BorderLayout.EAST);
 
-        // Books table
-        String[] columns = {"Mã sách", "Tên sách", "Tác giả", "Giá", "Số lượng"};
+        javax.swing.JPanel filterTopPanel = new javax.swing.JPanel(new java.awt.BorderLayout(10, 0));
+        filterTopPanel.setBackground(new java.awt.Color(255, 255, 255));
+        filterTopPanel.add(categoryPanel, java.awt.BorderLayout.CENTER);
+        filterTopPanel.add(searchPanel, java.awt.BorderLayout.EAST);
+
+        filterPanel.add(filterTopPanel, java.awt.BorderLayout.CENTER);
+
+        // Products table
+        String[] columns = {"Mã SP", "Tên sản phẩm", "Loại", "Giá", "Tồn kho"};
         Object[][] data = {
-            {"BS001", "Lập trình Java nâng cao", "Nguyễn Văn A", "150,000 đ", "10"},
-            {"BS002", "Cơ sở dữ liệu SQL", "Trần Thị B", "120,000 đ", "8"},
-            {"BS003", "Mạng máy tính", "Lê Văn C", "180,000 đ", "5"},
-            {"BS004", "Hệ điều hành Linux", "Phạm Văn D", "200,000 đ", "12"},
-            {"BS005", "An toàn thông tin", "Hoàng Thị E", "160,000 đ", "7"}
+            {"VPP001", "Bút bi xanh", "Bút viết", "5,000 đ", "50"},
+            {"VPP002", "Bút bi đỏ", "Bút viết", "5,000 đ", "45"},
+            {"VPP003", "Vở học sinh 96 trang", "Tập vở", "15,000 đ", "100"},
+            {"VPP004", "Giấy A4 Double A", "Giấy", "80,000 đ", "30"},
+            {"VPP005", "Bìa kẹp nhựa A4", "Bìa kẹp", "25,000 đ", "60"},
+            {"VPP006", "Kéo văn phòng", "Dụng cụ", "35,000 đ", "25"},
+            {"VPP007", "Bút chì 2B", "Bút viết", "3,000 đ", "80"},
+            {"VPP008", "Tẩy gôm", "Bút viết", "2,000 đ", "90"}
         };
-        booksTableScroll = new javax.swing.JTable(data, columns);
-        booksTableScroll.setFont(new java.awt.Font("Segoe UI", 0, 12));
-        booksTableScroll.setRowHeight(25);
-        booksTableScroll.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        booksTableScroll.getSelectionModel().addListSelectionListener(e -> {
-            int selectedRow = booksTableScroll.getSelectedRow();
+        productsTableScroll = new javax.swing.JTable(data, columns);
+        productsTableScroll.setFont(new java.awt.Font("Segoe UI", 0, 12));
+        productsTableScroll.setRowHeight(25);
+        productsTableScroll.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        productsTableScroll.getSelectionModel().addListSelectionListener(e -> {
+            int selectedRow = productsTableScroll.getSelectedRow();
             if (selectedRow >= 0) {
-                bookIdField.setText(booksTableScroll.getValueAt(selectedRow, 0).toString());
-                bookNameField.setText(booksTableScroll.getValueAt(selectedRow, 1).toString());
-                authorField.setText(booksTableScroll.getValueAt(selectedRow, 2).toString());
-                priceField.setText(booksTableScroll.getValueAt(selectedRow, 3).toString());
+                productIdField.setText(productsTableScroll.getValueAt(selectedRow, 0).toString());
+                productNameField.setText(productsTableScroll.getValueAt(selectedRow, 1).toString());
+                productTypeField.setText(productsTableScroll.getValueAt(selectedRow, 2).toString());
+                priceField.setText(productsTableScroll.getValueAt(selectedRow, 3).toString());
+                stockField.setText(productsTableScroll.getValueAt(selectedRow, 4).toString());
             }
         });
-        booksTable.setViewportView(booksTableScroll);
+        productsTable.setViewportView(productsTableScroll);
 
-        leftPanel.add(searchPanel, java.awt.BorderLayout.NORTH);
-        leftPanel.add(booksTable, java.awt.BorderLayout.CENTER);
+        productsPanel.add(filterPanel, java.awt.BorderLayout.NORTH);
+        productsPanel.add(productsTable, java.awt.BorderLayout.CENTER);
 
         // ============ RIGHT PANEL ============
-        rightPanel.setLayout(new java.awt.BorderLayout(0, 15));
-        rightPanel.setBackground(new java.awt.Color(245, 245, 250));
+        detailsPanel.setLayout(new java.awt.BorderLayout(0, 15));
+        detailsPanel.setBackground(new java.awt.Color(245, 245, 250));
 
-        // Book details panel
-        bookDetailsPanel.setBackground(new java.awt.Color(255, 255, 255));
-        bookDetailsPanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(
-            javax.swing.BorderFactory.createTitledBorder(null, "Thông tin sách",
+        // Product details panel
+        productDetailsPanel.setBackground(new java.awt.Color(255, 255, 255));
+        productDetailsPanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+            javax.swing.BorderFactory.createTitledBorder(null, "Thông tin sản phẩm",
                 javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                 javax.swing.border.TitledBorder.DEFAULT_POSITION,
                 new java.awt.Font("Segoe UI", 1, 16), new java.awt.Color(60, 60, 60)),
             javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)));
         
-        javax.swing.GroupLayout detailsLayout = new javax.swing.GroupLayout(bookDetailsPanel);
-        bookDetailsPanel.setLayout(detailsLayout);
+        javax.swing.GroupLayout detailsLayout = new javax.swing.GroupLayout(productDetailsPanel);
+        productDetailsPanel.setLayout(detailsLayout);
         
         detailsLayout.setHorizontalGroup(
             detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(detailsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bookIdLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bookNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(authorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(publisherLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productIdLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(priceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(stockLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(quantityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bookIdField)
-                    .addComponent(bookNameField)
-                    .addComponent(authorField)
-                    .addComponent(publisherField)
+                    .addComponent(productIdField)
+                    .addComponent(productNameField)
+                    .addComponent(productTypeField)
                     .addComponent(priceField)
+                    .addComponent(stockField)
                     .addGroup(detailsLayout.createSequentialGroup()
                         .addComponent(quantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -185,24 +211,24 @@ public class bansach extends javax.swing.JPanel {
             .addGroup(detailsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bookIdLabel)
-                    .addComponent(bookIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(productIdLabel)
+                    .addComponent(productIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bookNameLabel)
-                    .addComponent(bookNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(productNameLabel)
+                    .addComponent(productNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(authorLabel)
-                    .addComponent(authorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(publisherLabel)
-                    .addComponent(publisherField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(productTypeLabel)
+                    .addComponent(productTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(priceLabel)
                     .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(stockLabel)
+                    .addComponent(stockField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(detailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(quantityLabel)
@@ -211,33 +237,32 @@ public class bansach extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        // Labels setup
-        bookIdLabel.setFont(new java.awt.Font("Segoe UI", 1, 13));
-        bookIdLabel.setText("Mã sách:");
-        bookNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 13));
-        bookNameLabel.setText("Tên sách:");
-        authorLabel.setFont(new java.awt.Font("Segoe UI", 1, 13));
-        authorLabel.setText("Tác giả:");
-        publisherLabel.setFont(new java.awt.Font("Segoe UI", 1, 13));
-        publisherLabel.setText("Nhà xuất bản:");
+        // Labels
+        productIdLabel.setFont(new java.awt.Font("Segoe UI", 1, 13));
+        productIdLabel.setText("Mã SP:");
+        productNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 13));
+        productNameLabel.setText("Tên SP:");
+        productTypeLabel.setFont(new java.awt.Font("Segoe UI", 1, 13));
+        productTypeLabel.setText("Loại:");
         priceLabel.setFont(new java.awt.Font("Segoe UI", 1, 13));
-        priceLabel.setText("Giá bán:");
+        priceLabel.setText("Giá:");
+        stockLabel.setFont(new java.awt.Font("Segoe UI", 1, 13));
+        stockLabel.setText("Tồn kho:");
         quantityLabel.setFont(new java.awt.Font("Segoe UI", 1, 13));
         quantityLabel.setText("Số lượng:");
 
-        // Fields setup
-        bookIdField.setFont(new java.awt.Font("Segoe UI", 0, 13));
-        bookIdField.setEditable(false);
-        bookNameField.setFont(new java.awt.Font("Segoe UI", 0, 13));
-        bookNameField.setEditable(false);
-        authorField.setFont(new java.awt.Font("Segoe UI", 0, 13));
-        authorField.setEditable(false);
-        publisherField.setFont(new java.awt.Font("Segoe UI", 0, 13));
-        publisherField.setText("NXB Giáo dục");
-        publisherField.setEditable(false);
+        // Fields
+        productIdField.setFont(new java.awt.Font("Segoe UI", 0, 13));
+        productIdField.setEditable(false);
+        productNameField.setFont(new java.awt.Font("Segoe UI", 0, 13));
+        productNameField.setEditable(false);
+        productTypeField.setFont(new java.awt.Font("Segoe UI", 0, 13));
+        productTypeField.setEditable(false);
         priceField.setFont(new java.awt.Font("Segoe UI", 0, 13));
         priceField.setEditable(false);
-        quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
+        stockField.setFont(new java.awt.Font("Segoe UI", 0, 13));
+        stockField.setEditable(false);
+        quantitySpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 1000, 1));
 
         addToCartButton.setBackground(new java.awt.Color(50, 150, 50));
         addToCartButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -255,7 +280,7 @@ public class bansach extends javax.swing.JPanel {
             javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)));
         cartPanel.setLayout(new java.awt.BorderLayout(0, 10));
 
-        String[] cartColumns = {"Mã sách", "Tên sách", "Số lượng", "Đơn giá", "Thành tiền"};
+        String[] cartColumns = {"Mã SP", "Tên sản phẩm", "Số lượng", "Đơn giá", "Thành tiền"};
         Object[][] cartData = {};
         cartTableScroll = new javax.swing.JTable(cartData, cartColumns);
         cartTableScroll.setFont(new java.awt.Font("Segoe UI", 0, 12));
@@ -304,16 +329,22 @@ public class bansach extends javax.swing.JPanel {
         cartPanel.add(cartTable, java.awt.BorderLayout.CENTER);
         cartPanel.add(cartBottomPanel, java.awt.BorderLayout.SOUTH);
 
-        rightPanel.add(bookDetailsPanel, java.awt.BorderLayout.NORTH);
-        rightPanel.add(cartPanel, java.awt.BorderLayout.CENTER);
+        detailsPanel.add(productDetailsPanel, java.awt.BorderLayout.NORTH);
+        detailsPanel.add(cartPanel, java.awt.BorderLayout.CENTER);
 
-        mainContainer.add(leftPanel, java.awt.BorderLayout.WEST);
-        mainContainer.add(rightPanel, java.awt.BorderLayout.CENTER);
+        mainContainer.add(productsPanel, java.awt.BorderLayout.WEST);
+        mainContainer.add(detailsPanel, java.awt.BorderLayout.CENTER);
 
         add(mainContainer, java.awt.BorderLayout.CENTER);
     }
 
-    private void searchBooks() {
+    private void filterByCategory() {
+        String category = (String) categoryCombo.getSelectedItem();
+        javax.swing.JOptionPane.showMessageDialog(this, "Lọc theo danh mục: " + category, "Thông báo", 
+            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void searchProducts() {
         String keyword = searchField.getText().trim();
         if (keyword.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập từ khóa tìm kiếm!", "Thông báo", 
@@ -325,14 +356,14 @@ public class bansach extends javax.swing.JPanel {
     }
 
     private void addToCart() {
-        String bookId = bookIdField.getText().trim();
-        if (bookId.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng chọn sách!", "Thông báo", 
+        String productId = productIdField.getText().trim();
+        if (productId.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm!", "Thông báo", 
                 javax.swing.JOptionPane.WARNING_MESSAGE);
             return;
         }
         int quantity = (Integer) quantitySpinner.getValue();
-        javax.swing.JOptionPane.showMessageDialog(this, "Đã thêm " + quantity + " sách vào giỏ hàng!", "Thông báo", 
+        javax.swing.JOptionPane.showMessageDialog(this, "Đã thêm " + quantity + " sản phẩm vào giỏ hàng!", "Thông báo", 
             javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -354,25 +385,27 @@ public class bansach extends javax.swing.JPanel {
     // Variables declaration
     private javax.swing.JLabel titleLabel;
     private javax.swing.JPanel mainContainer;
-    private javax.swing.JPanel leftPanel;
+    private javax.swing.JPanel productsPanel;
+    private javax.swing.JLabel categoryLabel;
+    private javax.swing.JComboBox<String> categoryCombo;
     private javax.swing.JLabel searchLabel;
     private javax.swing.JTextField searchField;
     private javax.swing.JButton searchButton;
-    private javax.swing.JScrollPane booksTable;
-    private javax.swing.JTable booksTableScroll;
-    private javax.swing.JPanel rightPanel;
-    private javax.swing.JPanel bookDetailsPanel;
-    private javax.swing.JLabel bookDetailsTitle;
-    private javax.swing.JLabel bookIdLabel;
-    private javax.swing.JTextField bookIdField;
-    private javax.swing.JLabel bookNameLabel;
-    private javax.swing.JTextField bookNameField;
-    private javax.swing.JLabel authorLabel;
-    private javax.swing.JTextField authorField;
-    private javax.swing.JLabel publisherLabel;
-    private javax.swing.JTextField publisherField;
+    private javax.swing.JScrollPane productsTable;
+    private javax.swing.JTable productsTableScroll;
+    private javax.swing.JPanel detailsPanel;
+    private javax.swing.JPanel productDetailsPanel;
+    private javax.swing.JLabel productDetailsTitle;
+    private javax.swing.JLabel productIdLabel;
+    private javax.swing.JTextField productIdField;
+    private javax.swing.JLabel productNameLabel;
+    private javax.swing.JTextField productNameField;
+    private javax.swing.JLabel productTypeLabel;
+    private javax.swing.JTextField productTypeField;
     private javax.swing.JLabel priceLabel;
     private javax.swing.JTextField priceField;
+    private javax.swing.JLabel stockLabel;
+    private javax.swing.JTextField stockField;
     private javax.swing.JLabel quantityLabel;
     private javax.swing.JSpinner quantitySpinner;
     private javax.swing.JButton addToCartButton;
@@ -385,3 +418,4 @@ public class bansach extends javax.swing.JPanel {
     private javax.swing.JButton checkoutButton;
     private javax.swing.JButton clearCartButton;
 }
+
